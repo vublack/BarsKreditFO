@@ -3,8 +3,12 @@ import com.bars.pages.NewKreditFoPage;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.StringContains.containsString;
 
+
+import org.assertj.core.api.Assertions;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -20,6 +24,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
 
 public class KreditFoTest {
     private static WebDriver driver;
@@ -34,7 +40,7 @@ public class KreditFoTest {
         newKreditFoPage = new NewKreditFoPage(driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        driver.get("http://10.10.17.22:8080/barsroot/account/login/");
+        driver.get("http://10.10.17.40:8080/barsroot/account/login/");
 
     }
     public void userDelay(int time) {
@@ -126,7 +132,7 @@ public class KreditFoTest {
                 .until(ExpectedConditions.visibilityOf(NumDog));
         //Вставка рандомного числа
         Random random = new Random();
-        int num = random.nextInt(1000);
+        int num = random.nextInt((1000)+100);
         String str = Integer.toString(num);
         NumDog.sendKeys(str);
 
@@ -187,6 +193,7 @@ public class KreditFoTest {
         userDelay(500);
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(ParamKdWindow);
+        userDelay(500);
         //Блок Відсотки
         //нажимаем на кнопку відсотки
         WebElement RateButton = driver.findElement(By.xpath("//input[@id='refBaseNameRate']/preceding-sibling::button"));
@@ -471,6 +478,7 @@ public class KreditFoTest {
         userDelay(4000);
         String Title = driver.getTitle();
         System.out.println(Title);
+        userDelay(5000);
 //        assertThat(Title, containsString("Графік Погашення одного КД"));
         WebElement PogashBorg  = driver.findElement(By.xpath("(//tfoot/tr/td/div)[6]"));
         (new WebDriverWait(driver, 50))
@@ -538,20 +546,36 @@ public class KreditFoTest {
 
         userDelay(10000);
 
+        WebElement ProgrBar = driver.findElement(By.xpath("//*[@class = 'x-mask-msg-text']"));
+        (new WebDriverWait(driver, 30))
+                .until(ExpectedConditions.invisibilityOf(ProgrBar));
         List<WebElement> elements = driver.findElements(By.xpath("//div[@class='x-grid-cell-inner ']"));
-        for(WebElement element: elements){
-            assertTrue(element.getText().contains("132"));
-        }
+        (new WebDriverWait(driver, 30))
+                .until(ExpectedConditions.visibilityOfAllElements(elements));
+//        String expected = "str";
+//        Assertions.assertThat(elements)
+//                .extracting(WebElement::getText)
+//                .describedAs("None of elements contains sub-string %s!", expected)
+//                .anyMatch(text -> text.contains(expected));
 
-        String xpath = String.format( "//*[text()='%s']", str);
-        WebElement ZovKD = driver.findElement(By.xpath(xpath));
-        (new WebDriverWait(driver, 50))
-                .until(ExpectedConditions.visibilityOf(ZovKD));
-        System.out.println(ZovKD);
+        List<String> texts = elements.stream().map(WebElement::getText).collect(Collectors.toList());
+        String expected = str;
+        assertThat("None of elements contains sub-string", texts, hasItem(containsString(expected)));
 
-        String KD = ZovKD.getText();
-        System.out.println(KD);
-        assertThat(KD, containsString(str));
+//        List<WebElement> elements = driver.findElements(By.xpath("//div[@class='x-grid-cell-inner ']"));
+//        for(WebElement element: elements){
+//            assertTrue(element.getText().contains("132"));
+//        }
+
+//        String xpath = String.format( "//*[text()='%s']", str);
+//        WebElement ZovKD = driver.findElement(By.xpath(xpath));
+//        (new WebDriverWait(driver, 50))
+//                .until(ExpectedConditions.visibilityOf(ZovKD));
+//        System.out.println(ZovKD);
+//
+//        String KD = ZovKD.getText();
+//        System.out.println(KD);
+//        assertThat(KD, containsString(str));
         driver.close();
         driver.switchTo().window(PortfRobKD);
         //!!!! Вихід з фрейму!!!!
