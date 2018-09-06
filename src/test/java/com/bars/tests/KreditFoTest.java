@@ -1,14 +1,8 @@
 package com.bars.tests;
 import com.bars.pages.NewKreditFoPage;
-
-import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
-
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.StringContains.containsString;
-
-
-import org.assertj.core.api.Assertions;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -40,7 +34,7 @@ public class KreditFoTest {
         newKreditFoPage = new NewKreditFoPage(driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        driver.get("http://10.10.17.40:8080/barsroot/account/login/");
+        driver.get("http://10.10.17.22:8080/barsroot/account/login/");
 
     }
     public void userDelay(int time) {
@@ -74,16 +68,10 @@ public class KreditFoTest {
         (new WebDriverWait(driver, 60))
                 .until(ExpectedConditions.visibilityOf(H1));
         driver.switchTo().defaultContent();
-//        driver.get("http://10.10.17.50:8080/barsroot/CreditUi/NewCredit/?custtype=3"); // !!! УДАЛИТЬ при розкоментировании строк начального кода
-
-
 
         //!!!!Портфель НОВИХ кредитів ФО!!!!
         userDelay(1000);
         newKreditFoPage.findOpersInput("Портфель НОВИХ кредитів ФО");
-//        WebElement findOpers = driver.findElement(By.id("findOpersText"));
-//        findOpers.clear();
-//        findOpers.sendKeys("Портфель НОВИХ кредитів ФО");
         Actions builder = new Actions(driver);
         builder.sendKeys(Keys.ENTER).perform();
         WebElement PortKreditFo = driver.findElement(By.xpath("//*[@class='oper-name']/span[text()='Портфель НОВИХ кредитів ФО']"));
@@ -95,14 +83,14 @@ public class KreditFoTest {
         //!!!! Перехід на фрейм!!!!
         driver.switchTo().frame(driver.findElement(By.id("mainFrame")));
         userDelay(1000);
-//        WebElement FilterWindow = driver.findElement(By.xpath(".//*[text()='Фільтр перед населенням таблиці']"));
+//        WebElement FilterWindowQ = driver.findElement(By.xpath(".//*[text()='Фільтр перед населенням таблиці']"));
 //        (new WebDriverWait(driver, 100))
-//                .until(ExpectedConditions.visibilityOf(FilterWindow));
+//                .until(ExpectedConditions.visibilityOf(FilterWindowQ));
 //
-//        WebElement FurtherButton = driver.findElement(By.xpath("(//*[@class='x-btn-inner x-btn-inner-center'])[text()='Далі']"));
+//        WebElement FurtherButtonQ = driver.findElement(By.xpath("(//*[@class='x-btn-inner x-btn-inner-center'])[text()='Далі']"));
 //        (new WebDriverWait(driver, 30))
-//                .until(ExpectedConditions.visibilityOf(FurtherButton));
-//        FurtherButton.click();
+//                .until(ExpectedConditions.visibilityOf(FurtherButtonQ));
+//        FurtherButtonQ.click();
 //        userDelay(1000);
 
         WebElement AddKreditFo = driver.findElement(By.cssSelector("a[data-qtip='КП: Введення Нового КД']"));
@@ -158,13 +146,6 @@ public class KreditFoTest {
         BranchFilter.click();
         userDelay(1000);
         newKreditFoPage.FilterInput("/300465/");
-//        WebElement Branchinput = driver.findElement(By.xpath("//input[@data-bind='value:filters[0].value']"));
-//        (new WebDriverWait(driver, 5))
-//                .until(ExpectedConditions.visibilityOf(Branchinput));
-//        Branchinput.click();
-//        userDelay(1000);
-//        Branchinput.sendKeys("/300465/");
-//        userDelay(1000);
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(ParamKdWindow);
         //нажимаем на кнопку ОКПО
@@ -185,11 +166,6 @@ public class KreditFoTest {
         newKreditFoPage.FіnputClick();
         userDelay(500);
         newKreditFoPage.FilterInput("96281701");
-//        WebElement OKPOinput = driver.findElement(By.xpath("//span[@class='k-numeric-wrap k-state-default']/input[@class='k-formatted-value k-input']"));
-//        OKPOinput.click();
-//        userDelay(500);
-//        WebElement OKPOinput1 = driver.findElement(By.xpath("//input[@data-bind='value:filters[0].value']"));
-//        OKPOinput1.sendKeys("96281701");
         userDelay(500);
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(ParamKdWindow);
@@ -213,8 +189,6 @@ public class KreditFoTest {
         newKreditFoPage.FіnputClick();
         userDelay(500);
         newKreditFoPage.FilterInput("9999");
-//        WebElement Rateinput = driver.findElement(By.xpath("//span[@class='k-numeric-wrap k-state-default']/input[@class='k-formatted-value k-input']"));
-//        Rateinput.sendKeys("9999");
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(ParamKdWindow);
 
@@ -259,8 +233,6 @@ public class KreditFoTest {
         Prodfilter.click();
         userDelay(1000);
         newKreditFoPage.FilterInput("220301");
-//        WebElement Rateinput = driver.findElement(By.xpath("//span[@class='k-numeric-wrap k-state-default']/input[@class='k-formatted-value k-input']"));
-//        Rateinput.sendKeys("9999");
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(ParamKdWindow);
 
@@ -299,7 +271,6 @@ public class KreditFoTest {
         Strahfilter.click();
         userDelay(500);
         newKreditFoPage.FilterInput("YES");
-//        Actions builder = new Actions(driver); // !!! УДАЛИТЬ при розкоментировании строк начального кода
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(DodParamWindow);
         userDelay(500);
@@ -322,10 +293,6 @@ public class KreditFoTest {
         userDelay(500);
 
         newKreditFoPage.FіnputClick();
-//        WebElement Cprodfield = driver.findElement(By.xpath("//div[text()='Рядки із записами']/following-sibling::span[@class='k-widget k-numerictextbox']"));
-//        (new WebDriverWait(driver, 50))
-//                .until(ExpectedConditions.visibilityOf(Cprodfield));
-//        Cprodfield.click();
         userDelay(500);
         newKreditFoPage.FilterInput("2");
         builder.sendKeys(Keys.ENTER).perform();
@@ -351,10 +318,6 @@ public class KreditFoTest {
         userDelay(500);
 
         newKreditFoPage.FіnputClick();
-//        WebElement NotariusIdfield = driver.findElement(By.xpath("//div[text()='Рядки із записами']/following-sibling::span[@class='k-widget k-numerictextbox']"));
-//        (new WebDriverWait(driver, 50))
-//                .until(ExpectedConditions.visibilityOf(NotariusIdfield));
-//        NotariusIdfield.click();
         userDelay(500);
         newKreditFoPage.FilterInput("2134");
         builder.sendKeys(Keys.ENTER).perform();
@@ -446,8 +409,7 @@ public class KreditFoTest {
         WebElement ZvichFiltZovnN  = driver.findElement(By.xpath("//input[@name='CC_ID']"));
         (new WebDriverWait(driver, 30))
                 .until(ExpectedConditions.visibilityOf(ZvichFiltZovnN));
-        ZvichFiltZovnN.sendKeys(str);  // Потом Раскоментировать!!!!
-//        ZvichFiltZovnN.sendKeys("428"); //ПОТОМ УДАЛИТЬ!!!!
+        ZvichFiltZovnN.sendKeys(str);
         WebElement FurtherButton = driver.findElement(By.xpath("(//*[@class='x-btn-inner x-btn-inner-center'])[text()='Далі']"));
         (new WebDriverWait(driver, 30))
                 .until(ExpectedConditions.visibilityOf(FurtherButton));
@@ -479,7 +441,6 @@ public class KreditFoTest {
         String Title = driver.getTitle();
         System.out.println(Title);
         userDelay(5000);
-//        assertThat(Title, containsString("Графік Погашення одного КД"));
         WebElement PogashBorg  = driver.findElement(By.xpath("(//tfoot/tr/td/div)[6]"));
         (new WebDriverWait(driver, 50))
                 .until(ExpectedConditions.visibilityOf(PogashBorg));
@@ -513,13 +474,10 @@ public class KreditFoTest {
         }
         userDelay(2000);
         WebElement Z = driver.findElement(By.xpath("//input[@name ='B']"));
-        Z.sendKeys(Den); //Раскоментировать!!!!!
-//        Z.sendKeys("21/04/2018");
+        Z.sendKeys(Den);
 
         WebElement Po = driver.findElement(By.xpath("//input[@name ='E']"));
-        Po.sendKeys(Den); //Раскоментировать!!!!!
-//        Po.sendKeys("21/04/2018");
-
+        Po.sendKeys(Den);
 
         WebElement VikonButton1 = driver.findElement(By.xpath("(//*[@class= 'x-btn-inner x-btn-inner-center'])[text()='Виконати']"));
         (new WebDriverWait(driver, 50))
@@ -547,35 +505,15 @@ public class KreditFoTest {
         userDelay(10000);
 
         WebElement ProgrBar = driver.findElement(By.xpath("//*[@class = 'x-mask-msg-text']"));
-        (new WebDriverWait(driver, 30))
+        (new WebDriverWait(driver, 300))
                 .until(ExpectedConditions.invisibilityOf(ProgrBar));
         List<WebElement> elements = driver.findElements(By.xpath("//div[@class='x-grid-cell-inner ']"));
-        (new WebDriverWait(driver, 30))
+        (new WebDriverWait(driver, 300))
                 .until(ExpectedConditions.visibilityOfAllElements(elements));
-//        String expected = "str";
-//        Assertions.assertThat(elements)
-//                .extracting(WebElement::getText)
-//                .describedAs("None of elements contains sub-string %s!", expected)
-//                .anyMatch(text -> text.contains(expected));
 
         List<String> texts = elements.stream().map(WebElement::getText).collect(Collectors.toList());
         String expected = str;
         assertThat("None of elements contains sub-string", texts, hasItem(containsString(expected)));
-
-//        List<WebElement> elements = driver.findElements(By.xpath("//div[@class='x-grid-cell-inner ']"));
-//        for(WebElement element: elements){
-//            assertTrue(element.getText().contains("132"));
-//        }
-
-//        String xpath = String.format( "//*[text()='%s']", str);
-//        WebElement ZovKD = driver.findElement(By.xpath(xpath));
-//        (new WebDriverWait(driver, 50))
-//                .until(ExpectedConditions.visibilityOf(ZovKD));
-//        System.out.println(ZovKD);
-//
-//        String KD = ZovKD.getText();
-//        System.out.println(KD);
-//        assertThat(KD, containsString(str));
         driver.close();
         driver.switchTo().window(PortfRobKD);
         //!!!! Вихід з фрейму!!!!
