@@ -34,7 +34,7 @@ public class KreditFoTest {
         newKreditFoPage = new NewKreditFoPage(driver);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-        driver.get("http://10.10.17.22:8080/barsroot/account/login/");
+        driver.get("http://10.10.17.22:8080/barsroot/");
 
     }
     public void userDelay(int time) {
@@ -120,13 +120,13 @@ public class KreditFoTest {
                 .until(ExpectedConditions.visibilityOf(NumDog));
         //Вставка рандомного числа
         Random random = new Random();
-        int num = random.nextInt((1000)+100);
+        int num = random.nextInt((899)+100);
         String str = Integer.toString(num);
         NumDog.sendKeys(str);
 
         System.out.println(str);
 
-        WebElement Summ = driver.findElement(By.xpath("//*[@class='k-numeric-wrap k-state-default'][1]"));
+        WebElement Summ = driver.findElement(By.xpath("(//*[text()='Початкова сума']/following::*[@class='k-numeric-wrap k-state-default'])[1]"));
         Summ.click();
         Summ.sendKeys(str);
         //выбираем бранч
@@ -164,19 +164,19 @@ public class KreditFoTest {
         userDelay(1000);
 
         newKreditFoPage.FіnputClick();
-        userDelay(500);
+        userDelay(1000);
         newKreditFoPage.FilterInput("96281701");
-        userDelay(500);
+        userDelay(1000);
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(ParamKdWindow);
-        userDelay(500);
+        userDelay(1000);
         //Блок Відсотки
         //нажимаем на кнопку відсотки
         WebElement RateButton = driver.findElement(By.xpath("//input[@id='refBaseNameRate']/preceding-sibling::button"));
         (new WebDriverWait(driver, 50))
                 .until(ExpectedConditions.visibilityOf(RateButton));
         RateButton.click();
-        userDelay(500);
+        userDelay(1000);
         for(String windowsHandls : driver.getWindowHandles()) {
             driver.switchTo().window(windowsHandls);
         }
@@ -185,15 +185,15 @@ public class KreditFoTest {
         (new WebDriverWait(driver, 50))
                 .until(ExpectedConditions.visibilityOf(Ratefilter));
         Ratefilter.click();
-        userDelay(500);
+        userDelay(1000);
         newKreditFoPage.FіnputClick();
-        userDelay(500);
+        userDelay(1000);
         newKreditFoPage.FilterInput("9999");
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(ParamKdWindow);
 
         //выбираем тип кредита
-        userDelay(500);
+        userDelay(1000);
         WebElement TipKr = driver.findElement(By.xpath("//span[text()='Самостійно залучені кошти']/preceding::span[@class='k-select'][1]"));
         (new WebDriverWait(driver, 50))
                 .until(ExpectedConditions.visibilityOf(TipKr));
@@ -202,7 +202,7 @@ public class KreditFoTest {
         WebElement FlStandart = driver.findElement(By.xpath("//li[text()='ФЛ стандарт']"));
         FlStandart.click();
         //выбираем цель
-        WebElement GoalKr = driver.findElement(By.xpath("//span[text()='Самостійно залучені кошти']/following::span[@class='k-select'][2]"));
+        WebElement GoalKr = driver.findElement(By.xpath("(//*[text()='Продукт']/following::span[@class='k-select'])[1]"));
         GoalKr.click();
         userDelay(1000);
         WebElement Potoch = driver.findElement(By.xpath("//li[text()='Поточна дiяльнiсть']"));
@@ -260,7 +260,7 @@ public class KreditFoTest {
         WebElement StrahKred = driver.findElement(By.xpath("(//*[text()='Страхування кредиту']/following::a)[1]"));
         String DodParamWindow = driver.getWindowHandle();
         StrahKred.click();
-        userDelay(500);
+        userDelay(1000);
         for(String windowsHandls : driver.getWindowHandles()) {
             driver.switchTo().window(windowsHandls);
         }
@@ -269,11 +269,11 @@ public class KreditFoTest {
         (new WebDriverWait(driver, 50))
                 .until(ExpectedConditions.visibilityOf(Strahfilter));
         Strahfilter.click();
-        userDelay(500);
+        userDelay(1000);
         newKreditFoPage.FilterInput("YES");
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(DodParamWindow);
-        userDelay(500);
+        userDelay(1000);
         newKreditFoPage.clickOnovButon();
         // Вкладка Додаткові
         WebElement Dodatkovi = driver.findElement(By.xpath("//span[text()='Додаткові']"));
@@ -290,14 +290,14 @@ public class KreditFoTest {
         (new WebDriverWait(driver, 50))
                 .until(ExpectedConditions.visibilityOf(CprodId));
         CprodId.click();
-        userDelay(500);
+        userDelay(1000);
 
         newKreditFoPage.FіnputClick();
-        userDelay(500);
+        userDelay(1000);
         newKreditFoPage.FilterInput("2");
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(DodatkoviWindow);
-        userDelay(500);
+        userDelay(1000);
         newKreditFoPage.clickOnovButon();
 
         // Вкладка Застава
@@ -315,14 +315,14 @@ public class KreditFoTest {
         (new WebDriverWait(driver, 50))
                 .until(ExpectedConditions.visibilityOf(NotariusId));
         NotariusId.click();
-        userDelay(500);
+        userDelay(1000);
 
         newKreditFoPage.FіnputClick();
-        userDelay(500);
+        userDelay(1000);
         newKreditFoPage.FilterInput("2134");
         builder.sendKeys(Keys.ENTER).perform();
         driver.switchTo().window(DodatkoviWindow);
-        userDelay(500);
+        userDelay(1000);
         newKreditFoPage.clickOnovButon();
 
         //Нажимаем на кнопку "Зберігти"
@@ -349,7 +349,7 @@ public class KreditFoTest {
         System.out.println("Old window title: " + driver.getTitle());
 
         driver.switchTo().frame(driver.findElement(By.id("mainFrame")));
-        userDelay(500);
+        userDelay(1000);
         WebElement OnovGrid = driver.findElement(By.xpath("//span[@class='x-btn-icon-el x-tbar-loading ']"));
         (new WebDriverWait(driver, 50))
                 .until(ExpectedConditions.visibilityOf(OnovGrid));
@@ -456,7 +456,7 @@ public class KreditFoTest {
         System.out.println("Old window title: " + driver.getTitle());
 
         driver.switchTo().frame(driver.findElement(By.id("mainFrame")));
-        userDelay(500);
+        userDelay(1000);
 
         //Графік подій по портфелю
         ZovNRobKD.click();
@@ -507,6 +507,7 @@ public class KreditFoTest {
         WebElement ProgrBar = driver.findElement(By.xpath("//*[@class = 'x-mask-msg-text']"));
         (new WebDriverWait(driver, 300))
                 .until(ExpectedConditions.invisibilityOf(ProgrBar));
+
         List<WebElement> elements = driver.findElements(By.xpath("//div[@class='x-grid-cell-inner ']"));
         (new WebDriverWait(driver, 300))
                 .until(ExpectedConditions.visibilityOfAllElements(elements));
@@ -518,8 +519,6 @@ public class KreditFoTest {
         driver.switchTo().window(PortfRobKD);
         //!!!! Вихід з фрейму!!!!
         driver.switchTo().defaultContent();
-
-
     }
     @AfterClass
     public static void tearDown() {
